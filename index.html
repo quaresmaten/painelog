@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+
+<html lang="pt-br">
+<head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Painel Logístico - Cia C/2º Gpt E</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet"/>
+<style>
+    body {
+      background-color: #121212;
+      color: #f8f9fa;
+    }
+    .container {
+      padding: 30px;
+    }
+    h1 {
+      font-weight: bold;
+      color: #0d6efd;
+    }
+    table {
+      background-color: #212529;
+      table-layout: auto;
+      width: 100%;
+    }
+    thead {
+      background-color: #0d6efd;
+      color: white;
+    }
+    .form-control, .form-select {
+      border-radius: 8px;
+      background-color: #343a40;
+      color: #f8f9fa;
+      border: 1px solid #495057;
+      vertical-align: middle;
+    }
+    .status-Em-Andamento {
+      background-color: #ffc107 !important;
+      color: black !important;
+    }
+    .status-Atrasado {
+      background-color: #dc3545 !important;
+      color: white !important;
+    }
+    .status-Entregue {
+      background-color: #198754 !important;
+      color: white !important;
+    }
+    select.form-select option {
+      white-space: normal;
+      vertical-align: middle;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      max-width: 300px;
+      overflow-wrap: break-word;
+    }
+    select.form-select {
+      white-space: normal;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      min-width: 160px;
+      max-width: 100%;
+    }
+    td select.form-select {
+      width: 100%;
+    }
+  
+    
+
+
+    
+
+
+    select.status-Em-Andamento {
+      background-color: #ffc107 !important;
+      color: black !important;
+    }
+    select.status-Atrasado {
+      background-color: #dc3545 !important;
+      color: white !important;
+    }
+    select.status-Entregue {
+      background-color: #198754 !important;
+      color: white !important;
+    }
+
+
+.container { max-width: 100% !important; }</style>
+</head>
+<body>
+<div class="container">
+<h1 class="mb-4 text-center"><i class="bi bi-truck"></i> Painel Logístico - Cia C/2º Gpt E</h1>
+<form class="row g-3 mb-4" id="form-empenho">
+<div class="col-md-2">
+<label class="form-label">Nº NE</label>
+<input class="form-control" id="numeroInput" placeholder="ex: 12" type="number"/>
+</div>
+<div class="col-md-2">
+<label class="form-label">Data</label>
+<input class="form-control" id="dataInput" type="date"/>
+</div>
+<div class="col-md-3">
+<label class="form-label">Fornecedor</label>
+<input class="form-control" id="fornecedorInput" type="text"/>
+</div>
+<div class="col-md-2">
+<label class="form-label">Status</label>
+<select class="form-select" id="statusInput">
+<option disabled="" selected="">Escolher...</option>
+<option>Em Andamento</option>
+<option>Atrasado</option>
+<option>Entregue</option>
+</select>
+</div>
+<div class="col-md-3">
+<label class="form-label">Requisitante</label>
+<select class="form-select" id="requisitanteInput">
+<option>S4</option>
+<option>S3</option>
+<option>Pelotão de Obras</option>
+<option>Pelotão de Transporte</option>
+<option>Subtenência</option>
+</select>
+</div>
+<div class="col-md-6">
+<label class="form-label">Material</label>
+<input class="form-control" id="materialInput" type="text"/>
+</div>
+<div class="col-md-6">
+<label class="form-label">Acompanhamento</label>
+<select class="form-select" id="acompanhamentoInput">
+<option value="">Sem acompanhamento</option>
+<option>Sem Alteração</option>
+<option>Abrir Processo Administrativo</option>
+<option>Realizar novo contato com a empresa</option>
+<option>Solicitar prazo de entrega</option>
+<option>Determinar 10 dias para entrega ou será aberto o Processo administrativo</option>
+</select>
+</div>
+<div class="col-md-3">
+<label class="form-label">Parecer do Cmt</label>
+<select class="form-select" id="parecerInput">
+<option>Sem Parecer</option>
+<option>Ir na empresa</option>
+<option>Definir prioridade</option>
+<option>Abrir Processo Administrativo</option>
+</select>
+</div>
+<div class="col-md-12">
+  <label class="form-label">Observação</label>
+  <input class="form-control" id="observacaoInput" type="text" required/>
+</div>
+<div class="col-12">
+<button class="btn btn-primary" type="submit">Incluir Empenho</button>
+</div>
+</form>
+<div class="mb-3 d-flex gap-3 flex-wrap">
+<div>
+<label class="form-label" for="statusFilter">Filtrar por Status:</label>
+<select class="form-select w-auto" id="statusFilter">
+<option value="">Todos</option>
+<option>Em Andamento</option>
+<option>Atrasado</option>
+<option>Entregue</option>
+</select>
+</div>
+<div>
+<label class="form-label" for="acompanhamentoFilter">Filtrar por Acompanhamento:</label>
+<select class="form-select w-auto" id="acompanhamentoFilter">
+<option value="">Todos</option>
+<option>Sem Alteração</option>
+<option>Abrir Processo Administrativo</option>
+<option>Realizar novo contato com a empresa</option>
+<option>Solicitar prazo de entrega</option>
+<option>Determinar 10 dias para entrega ou será aberto o Processo administrativo</option>
+</select>
+</div>
+</div>
+<div class="table-responsive">
+<table class="table table-bordered text-white">
+<thead>
+<tr>
+<th class="text-center">Nº NE</th>
+<th class="text-center">Data</th>
+<th class="text-center">Fornecedor</th>
+<th class="text-center">Status</th>
+<th class="text-center">Requisitante</th>
+<th class="text-center">Material</th>
+<th class="text-center">Acompanhamento</th>
+<th class="text-center">Observação</th>
+<th class="text-center">Data Limite</th>
+<th class="text-center">Parecer do Cmt</th>
+<th class="text-center">Ações</th>
+</tr>
+</thead>
+<tbody id="empenho-table-body"></tbody>
+</table>
+</div>
+</div>
+<script>
+    let empenhos = [];
+
+    function editarCampo(index, campo, valor) {
+      if (valor.trim() !== '') {
+        empenhos[index][campo] = valor.trim();
+      }
+      salvarEmpenhos();
+      renderTable();
+    }
+
+    function salvarEmpenhos() {
+      localStorage.setItem('empenhos', JSON.stringify(empenhos));
+    }
+
+    function calcularDataLimite(data, status) {
+      if (!data) return '';
+      const base = new Date(data);
+      if (isNaN(base.getTime())) return '';
+      const dias = status === 'Entregue' ? 30 : 10;
+      base.setDate(base.getDate() + dias);
+      return base.toLocaleDateString('pt-BR');
+    }
+
+    function renderTable() {
+      const tbody = document.getElementById('empenho-table-body');
+      const statusFiltro = document.getElementById('statusFilter')?.value || '';
+      const acompanhamentoFiltro = document.getElementById('acompanhamentoFilter')?.value || '';
+      tbody.innerHTML = '';
+
+      for (let index = 0; index < empenhos.length; index++) {
+        const emp = empenhos[index];
+        const statusEmp = (emp.status || '').trim().toLowerCase();
+        const acompanhamentoEmp = (emp.acompanhamento || '').trim().toLowerCase();
+
+        if (statusFiltro && statusEmp !== statusFiltro.trim().toLowerCase()) continue;
+        if (acompanhamentoFiltro && acompanhamentoEmp !== acompanhamentoFiltro.trim().toLowerCase()) continue;
+
+        const row = document.createElement('tr');
+        row.className = 'align-middle';
+
+        const statusClass = emp.status ? 'status-' + emp.status.replace(/\s+/g, '-') : '';
+
+        row.innerHTML = `
+          <td class="text-center">${emp.numero}</td>
+          <td class="text-center" contenteditable="true" onblur="editarCampo(${index}, 'data', this.innerText)">${emp.data}</td>
+          <td class="text-center" contenteditable="true" onblur="editarCampo(${index}, 'fornecedor', this.innerText)">${emp.fornecedor}</td>
+          <td class="text-center" id="status-${index}"></td>
+          <td class="text-center">${emp.requisitante}</td>
+          <td class="text-center" contenteditable="true" onblur="editarCampo(${index}, 'material', this.innerText)">${emp.material || ''}</td>
+          <td class="text-center" id="acompanhamento-${index}"></td>
+          <td class="text-center" contenteditable="true" onblur="editarCampo(${index}, 'observacao', this.innerText)">${emp.observacao || ''}</td>
+          <td class="text-center">${calcularDataLimite(emp.data, emp.status)}</td>
+          <td class="text-center" id="parecer-${index}"></td>
+          <td class="text-center"><button onclick="excluirEmpenho(${index})" class="btn btn-danger btn-sm"><i class="bi bi-trash"></i></button></td>
+        `;
+
+        const statusOptions = ['Em Andamento', 'Atrasado', 'Entregue'];
+        const statusSelect = document.createElement('select');
+        statusSelect.className = 'form-select form-select-sm';
+    statusSelect.classList.add('status-' + (emp.status || '').replace(/\s+/g, '-'));
+        statusOptions.forEach(opt => {
+          const option = document.createElement('option');
+          option.value = opt;
+          option.textContent = opt;
+          if (opt === emp.status) option.selected = true;
+          statusSelect.appendChild(option);
+        });
+        statusSelect.onchange = function () {
+          editarCampo(index, 'status', this.value);
+        };
+        row.querySelector(`#status-${index}`).appendChild(statusSelect);
+
+        const acompanhamentoOptions = [
+          '',
+          'Sem Alteração',
+          'Abrir Processo Administrativo',
+          'Realizar novo contato com a empresa',
+          'Solicitar prazo de entrega',
+          'Determinar 10 dias para entrega ou será aberto o Processo administrativo'
+        ];
+
+        const acompanhamentoSelect = document.createElement('select');
+        acompanhamentoSelect.className = 'form-select form-select-sm';
+        acompanhamentoOptions.forEach(opt => {
+          const option = document.createElement('option');
+          option.value = opt;
+          option.textContent = opt === '' ? 'Sem acompanhamento' : opt;
+          if (opt === emp.acompanhamento) option.selected = true;
+          acompanhamentoSelect.appendChild(option);
+        });
+        acompanhamentoSelect.onchange = function () {
+          editarCampo(index, 'acompanhamento', this.value);
+        };
+        row.querySelector(`#acompanhamento-${index}`).appendChild(acompanhamentoSelect);
+
+        
+        const parecerOptions = [
+          'Sem Parecer',
+          'Ir na empresa',
+          'Definir prioridade',
+          'Abrir Processo Administrativo'
+        ];
+        const parecerSelect = document.createElement('select');
+        parecerSelect.className = 'form-select form-select-sm';
+        parecerOptions.forEach(opt => {
+          const option = document.createElement('option');
+          option.value = opt;
+          option.textContent = opt;
+          if (opt === emp.parecer) option.selected = true;
+          parecerSelect.appendChild(option);
+        });
+        parecerSelect.onchange = function () {
+          editarCampo(index, 'parecer', this.value);
+        };
+        row.querySelector(`#parecer-${index}`).appendChild(parecerSelect);
+    
+        tbody.appendChild(row);
+      }
+    }
+
+    function excluirEmpenho(index) {
+      if (confirm('Deseja realmente excluir este empenho?')) {
+        empenhos.splice(index, 1);
+        salvarEmpenhos();
+        renderTable();
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', function () {
+      empenhos = JSON.parse(localStorage.getItem('empenhos')) || [];
+
+      document.getElementById('statusFilter').addEventListener('change', renderTable);
+      document.getElementById('acompanhamentoFilter').addEventListener('change', renderTable);
+
+      document.getElementById('form-empenho').addEventListener('submit', function (e) {
+        e.preventDefault();
+        const numeroBrutoInput = document.getElementById('numeroInput').value;
+        if (numeroBrutoInput === '' || isNaN(numeroBrutoInput)) {
+          alert('Número do NE inválido.');
+          return;
+        }
+        const numeroBruto = parseInt(numeroBrutoInput);
+        const numero = '2025NE' + numeroBruto.toString().padStart(5, '0');
+        const data = document.getElementById('dataInput').value;
+        const fornecedor = document.getElementById('fornecedorInput').value;
+        const status = document.getElementById('statusInput').value;
+        const requisitante = document.getElementById('requisitanteInput').value;
+        const material = document.getElementById('materialInput').value;
+        const acompanhamento = document.getElementById('acompanhamentoInput').value;
+        const parecer = document.getElementById('parecerInput').value;
+        const observacao = document.getElementById('observacaoInput').value;
+
+        if (!data || !fornecedor || !status || !requisitante) {
+          alert('Preencha todos os campos obrigatórios.');
+          return;
+        }
+
+        const novoEmpenho = {
+          observacao,
+          numero,
+          data,
+          fornecedor,
+          status,
+          requisitante,
+          material,
+          acompanhamento,
+          parecer
+        };
+
+        empenhos.push(novoEmpenho);
+        salvarEmpenhos();
+        renderTable();
+        document.getElementById('form-empenho').reset();
+      });
+
+      renderTable();
+    });
+  </script>
+</body>
+</html>
